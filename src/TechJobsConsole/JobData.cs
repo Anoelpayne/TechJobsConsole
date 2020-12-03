@@ -20,11 +20,33 @@ namespace TechJobsConsole
          * Returns a list of all values contained in a given column,
          * without duplicates. 
          */
+        public static List<Dictionary<string, string>> FindByValue (string searchTerm)
+        {
+            LoadData();
+
+            List<Dictionary<string, string>> jobs = new List<Dictionary<string, string>>();
+
+            foreach (Dictionary<string, string> row in AllJobs)
+            {
+                foreach (string key in row.Keys)
+                {
+                    string keyValue = row[key];
+                    if (keyValue.ToLower().Contains(searchTerm.ToLower()))
+                    {
+                        jobs.Add(row);
+                    }
+                }
+
+            }
+
+            return jobs;
+        }
         public static List<string> FindAll(string column)
         {
             LoadData();
 
             List<string> values = new List<string>();
+
 
             foreach (Dictionary<string, string> job in AllJobs)
             {
@@ -49,7 +71,7 @@ namespace TechJobsConsole
             {
                 string aValue = row[column];
 
-                if (aValue.Contains(value))
+                if (aValue.ToLower().Contains(value.ToLower()))
                 {
                     jobs.Add(row);
                 }
